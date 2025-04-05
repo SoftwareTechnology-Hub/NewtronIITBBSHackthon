@@ -33,28 +33,36 @@ To run this project, you'll need the following:
 
 ## Installation
 
-1. Clone the repository:
+## 1. Clone the repository:
+
    git clone https://github.com/SoftwareTechnology-Hub/NewtronIITBBSHackthon.git
    
-2.Navigate to the project directory:
+## 2.Navigate to the project directory:
+  
   cd NewtronIITBBSHackthon
 
-3.Create a virtual environment
+## 3.Create a virtual environment
+  
   python -m venv venv
 
-4.Activate the virtual environment:
+## 4.Activate the virtual environment:
+  
   venv\Scripts\activate
 
-5.Install the required dependencies:
+## 5.Install the required dependencies:
+ 
   pip install -r requirements.txt
 
-6.Apply migrations to set up the database:
+## 6.Apply migrations to set up the database:
+  
   python manage.py migrate
 
-7.Create a superuser to access the Django admin panel:
+## 7.Create a superuser to access the Django admin panel:
+  
   python manage.py createsuperuser
 
-8.Start the development server:
+## 8.Start the development server:
+  
   python manage.py runserver
 
 
