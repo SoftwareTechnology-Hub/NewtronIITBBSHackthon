@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Available Courses</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef2f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .course-card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      transition: transform 0.2s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .course-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .faculty-name {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .details-link {
+      display: inline-block;
+      text-decoration: none;
+      background-color: #3498db;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    .details-link:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Available Courses</h2>
+
+<div class="card-container">
+  {% for course in courses %}
+    <div class="course-card">
+      <div class="course-title">{{ course.title }}</div>
+      <div class="faculty-name">Faculty: {{ course.faculty.username }}</div>
+      <a href="{% url 'course_details' course.id %}" class="details-link">View Details</a>
+    </div>
+  {% endfor %}
+</div>
+
+</body>
+</html>

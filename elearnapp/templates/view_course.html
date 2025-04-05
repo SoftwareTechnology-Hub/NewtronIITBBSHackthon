@@ -1,0 +1,35 @@
+<h2>Course: {{ course.title }}</h2>
+
+<h3>Lectures</h3>
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th>PDF</th>
+        <th>Video</th>
+    </tr>
+    {% for lecture in lectures %}
+    <tr>
+        <td>{{ lecture.title }}</td>
+        <td>{{ lecture.content }}</td>
+        <td>
+            {% if lecture.pdf_file %}
+                <a href="{{ lecture.pdf_file.url }}" target="_blank">View PDF</a>
+            {% else %}
+                No PDF Uploaded
+            {% endif %}
+        </td>
+        <td>
+            {% if lecture.video_file %}
+                <a href="{{ lecture.video_file.url }}" target="_blank">View Video</a>
+            {% else %}
+                No Video Uploaded
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No lectures available</td>
+    </tr>
+    {% endfor %}
+</table>

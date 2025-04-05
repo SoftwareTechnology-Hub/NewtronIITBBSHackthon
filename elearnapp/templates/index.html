@@ -1,0 +1,495 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS_IIT Bhubaneswar</title>
+    <!-- Favicon Icon -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+   
+  <style>
+    :root {
+      --primary: #1abc9c;
+      --secondary: #2c3e50;
+      --highlight: #4092ff;
+      --light: #f9f9f9;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --font-alt: 'Georgia', serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: var(--font-main);
+    }
+
+    body {
+      background: url("{% static 'college.png' %}") center/cover no-repeat fixed;
+      color: #333;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--secondary);
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      height: 70px;
+      z-index: 1000;
+      box-shadow: 0 4px 6px var(--shadow);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      margin-right: 15px;
+    }
+
+    .college-info h1 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .college-info p {
+      font-size: 14px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: var(--primary);
+    }
+
+    main {
+      margin-top: 80px;
+    }
+
+    .home-section {
+      height: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      text-align: center;
+      background: url("{% static 'home_bg.jpg' %}") center/cover no-repeat;
+      position: relative;
+    }
+
+    .home-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(255, 255, 255, 0.6);
+      z-index: 1;
+    }
+
+    .split-container {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .split-right h2 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+
+    .tagline {
+      font-size: 45px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .taglinek {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .tag-detail {
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+
+    .about {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #e0f7ff, #ffffff);
+      text-align: center;
+    }
+
+    .abt {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .about-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .about-box {
+      background: #fff;
+      width: 250px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px var(--shadow);
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .about-box:hover {
+      transform: translateY(-10px);
+    }
+
+    .about-box img {
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    #abt-box {
+      font-size: 14px;
+      font-family: var(--font-alt);
+      color: #333;
+    }
+
+    .contact {
+      background: #fff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .contact-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contact-info {
+      flex: 1 1 40%;
+      text-align: left;
+    }
+
+    .contact-form {
+      flex: 1 1 50%;
+      background-color: var(--light);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .submit-btn {
+      background-color: #007bff;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      background-color: #222;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* Animations */
+    .fadeIn {
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    #typed-text {
+  font-size: 50px; /* Increase this for even larger text */
+  font-weight: bold;
+  color: #2c3e50;
+  font-family: 'Georgia', serif;
+}
+.explore-btn {
+  background-color: #1d4ed8; /* Blue */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.explore-btn:hover {
+  background-color: #0931a0; /* Darker blue */
+  transform: translateY(-2px);
+}
+
+.explore-btn:active {
+  transform: scale(0.98);
+}
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+      .header-left {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .college-info h1 {
+        font-size: 16px;
+      }
+
+      .about-container,
+      .contact-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .split-right h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+
+
+{% load static %}
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+          <img src="{% static 'logo.png' %}" alt="College Logo" class="logo">
+          <div class="college-info">
+                <h1>IIT Bhubaneswar</h1>
+                <p>Learning Management System</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li>  <a href="{% url 'register' %}">Register</a></li>
+                <a href="{% url 'course_list' %}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                  View Courses
+              </a>
+              
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="home-section">
+            <div class="split-container">
+                <!-- Left Side (Image) -->
+                <div class="split-left">               
+
+                                      
+                </div>
+                <!-- Right Side (Text) -->
+                <div class="split-right">
+                    <h2><span id="typed-text"></span></h2>
+                    <p class="tagline">
+                        From <span
+                            style="color:#4092ff ; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Chalkboards</span>
+                        to <span
+                            style="color:#4092ff ; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Dashboard
+                        </span>!!!
+                    </p>
+                    <br>
+                    <p class="tag-detail">
+                        " Not just a platform — a revolution in learning.
+                        Interactive, intelligent, and made for the curious.
+                        Welcome to the future of classrooms. "
+                    </p>
+                    
+            </div>
+        </section>
+
+        <!-- About Us Section (Updated with Services Styles) -->
+        <section id="about" class="about">
+            <div class="about-content">
+                <h2 class="abt"><span
+                        style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">About
+                        Us</span></h2>
+                <p class="taglinek">
+                    "Education isn't just about books anymore — it's about experiences, interactions, and engagement."
+                </p>
+                <p class="tag-detail">
+                    Welcome an innovative Learning Management System (LMS) born from the heart of Team <span
+                        style="color: #4092ff;     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">NEWTRON</span>.
+                    <br>
+                    We designed this to empower students, faculty, and administrators with a seamless digital classroom
+                    experience.
+                </p>
+                <div class="about-container">
+                    <div class="about-box">
+                      <img src="{% static 'img1.jpg' %}" alt="Img1" style="width: 100%;">
+                      <p id="abt-box">Real-time student progress tracking.</p>
+                    </div>
+                    <div class="about-box">
+                      <img src="{% static 'img2.jpg' %}" alt="Img2" style="width: 100%;">
+                      <p id="abt-box">Centralized lecture and course management.</p>
+                    </div>
+                    <div class="about-box">
+                      <img src="{% static 'img3.jpg' %}" alt="Img3" style="width: 100%;">
+                      <p id="abt-box">Assignment & quiz automation with smart grading.</p>
+                    </div>
+                    <div class="about-box">
+                      <img src="{% static 'img4.jpg' %}" alt="Img3" style="width: 100%;">
+                      <p id="abt-box">AI-driven course recommendations for smarter learning.</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Contact Us Section -->
+        <section id="contact" class="contact">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2 class="abt"><span
+                            style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Contact
+                            Us</span></h2>
+                            <br>
+                    <p>Feel free to use the form or drop us an email.</p>
+                    <br>
+                    <p>📞 +91 123456789</p>
+                    <br>
+                    <p>📧 lms.support@iit.bbs.com</p>
+                    <br>
+                    <p>📍 IIT Bhubaneswar</p>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="First Name" required>
+                            <input type="text" placeholder="Last Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Phone (optional)">
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Made With ❤ By Team NEWTRON</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = this.getAttribute('href');
+        
+                // Allow normal navigation for external links (like login.html)
+                if (!target.startsWith("#")) {
+                    return; // Exit function, allowing default behavior
+                }
+        
+                // Otherwise, scroll smoothly to the section
+                e.preventDefault();
+                document.querySelector(target).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        // TYping animation
+        const options = {
+            strings: ["Who are we?"],
+            typeSpeed: 70,
+            backSpeed: 40,
+            backDelay: 1000,
+            loop: true
+          };
+          
+          new Typed("#typed-text", options);
+          
+        
+        
+        
+        
+    </script>
+</body>
+
+</html>

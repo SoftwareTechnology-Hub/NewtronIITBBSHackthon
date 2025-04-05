@@ -1,0 +1,91 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("{% static 'college.jpg' %}");
+      display: flex;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #1d4ed8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0931a0;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 15px auto;
+      width: 90px; /* adjust as needed */
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <form method="POST">
+    <h2>Register E-Learing Portal</h2>
+    <img src="{% static 'logo.png' %}" alt="Logo" class="logo">
+
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <select name="role">
+      <option value="student">Student</option>
+      <option value="faculty">Faculty</option>
+    </select>
+    <button type="submit">Register</button>
+    <p style="text-align:center; margin-top: 15px;">
+      Already have an account?
+      <a href="{% url 'login' %}" style="color: #1d4ed8; text-decoration: none;">Login</a>
+    </p>
+  </form>
+</body>
+</html>

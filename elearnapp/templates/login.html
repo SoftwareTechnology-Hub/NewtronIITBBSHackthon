@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("{% static 'college.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 15px auto;
+      width: 90px;
+      height: auto;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #1d4ed8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0931a0;
+    }
+
+    .error-message {
+      color: red;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <form method="POST">
+    <h2>Login Portal</h2>
+    <img src="{% static 'logo.png' %}" alt="Logo" class="logo">
+
+    {% csrf_token %}
+
+    {% if error %}
+      <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+
+    <select name="role" required>
+      <option value="student">Student</option>
+      <option value="faculty">Faculty</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
+    <button type="submit">Login</button>
+    <p style="text-align:center; margin-top: 15px;">
+        Donot have an account?
+        <a href="{% url 'register' %}" style="color: #1d4ed8; text-decoration: none;">signup</a>
+      </p>
+  </form>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Questions to Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            width: 50%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 8px;
+        }
+        .choice-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .question-list {
+            margin-top: 20px;
+        }
+        .question-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+        .finalize-btn {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Add Questions to Quiz: {{ quiz.title }}</h2>
+
+    <form id="question-form" method="POST">
+        {% csrf_token %}
+        <label>Question:</label>
+        <input type="text" name="question_text" required>
+
+        <h4>Choices:</h4>
+        <div id="choices">
+            <div class="choice-group">
+                <input type="text" name="choice_1" required>
+                <input type="radio" name="correct_choice" value="1"> Correct Answer
+            </div>
+            <div class="choice-group">
+                <input type="text" name="choice_2" required>
+                <input type="radio" name="correct_choice" value="2"> Correct Answer
+            </div>
+            <div class="choice-group">
+                <input type="text" name="choice_3" required>
+                <input type="radio" name="correct_choice" value="3"> Correct Answer
+            </div>
+            <div class="choice-group">
+                <input type="text" name="choice_4" required>
+                <input type="radio" name="correct_choice" value="4"> Correct Answer
+            </div>
+        </div>
+
+        <button type="submit">Add Question</button>
+    </form>
+    <h3>All Added Questions</h3>
+    {% if quiz.questions.all %}
+        <div class="question-list">
+            {% for question in quiz.questions.all %}
+                <div class="question-item">
+                    <strong>Q{{ forloop.counter }}:</strong> {{ question.text }}
+                    <ul>
+                        {% for choice in question.choices.all %}
+                            <li>{{ choice.text }} {% if choice.is_correct %} ✅{% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No questions added yet.</p>
+    {% endif %}
+    
+    <form method="POST" action="{% url 'finalize_quiz' quiz.id %}">
+        {% csrf_token %}
+        <button type="submit" class="finalize-btn">Finalize Quiz</button>
+    </form>
+
+</body>
+</html>

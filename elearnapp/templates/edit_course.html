@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Course - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f3f4f6;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 20%;
+            background-color: #1e3a8a;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #3b82f6;
+        }
+
+        /* Main content */
+        .edit-course-container {
+            margin-left: 20%;
+            padding: 40px;
+            width: 80%;
+        }
+
+        .edit-course-container h3 {
+            font-size: 24px;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        .edit-course-container form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            max-width: 600px;
+        }
+
+        .edit-course-container label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .edit-course-container input,
+        .edit-course-container select,
+        .edit-course-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .edit-course-container textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .edit-course-container button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .edit-course-container button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .edit-course-container a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .edit-course-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Scrollbar for sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: #60a5fa;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a href="{% url 'create_faculty' %}">Add Faculty</a>
+        <a href="{% url 'create_course' %}">Create Course</a>
+        <a href="{% url 'admin_announcements' %}">Manage Announcements</a>
+        <!-- Add more links as needed -->
+    </div>
+
+    <!-- Main content -->
+    <div class="edit-course-container">
+        <h3>Edit Course</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label>Title:</label>
+            <input type="text" name="title" value="{{ course.title }}" required>
+
+            <label>Description:</label>
+            <textarea name="description" required>{{ course.description }}</textarea>
+
+            <label>Assign Faculty:</label>
+            <select name="faculty" required>
+                {% for faculty in faculties %}
+                    <option value="{{ faculty.id }}" {% if course.faculty.id == faculty.id %}selected{% endif %}>
+                        {{ faculty.username }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label for="start_date">Start Date:</label>
+            <input type="date" name="start_date" value="{{ course.start_date|date:'Y-m-d' }}" required>
+
+            <button type="submit">Update Course</button>
+        </form>
+
+        <a href="{% url 'admin_dashboard' %}">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

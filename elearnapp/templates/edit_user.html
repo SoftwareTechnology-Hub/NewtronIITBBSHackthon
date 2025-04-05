@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f3f4f6;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 20%;
+            background-color: #1e3a8a; /* Tailwind blue-800 */
+            color: white;
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #3b82f6;
+        }
+
+        /* Main content */
+        .edit-user-container {
+            margin-left: 20%;
+            padding: 40px;
+            width: 80%;
+        }
+
+        .edit-user-container h3 {
+            font-size: 24px;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        .edit-user-container form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            max-width: 500px;
+        }
+
+        .edit-user-container label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .edit-user-container input,
+        .edit-user-container select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .edit-user-container button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .edit-user-container button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .edit-user-container a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .edit-user-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Scrollbar for sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: #60a5fa;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a href="{% url 'create_faculty' %}">Add Faculty</a>
+        <a href="{% url 'create_course' %}">Create Course</a>
+        <a href="{% url 'admin_announcements' %}">Manage Announcements</a>
+        <!-- Add more links as needed -->
+    </div>
+
+    <!-- Main content -->
+    <div class="edit-user-container">
+        <h3>Edit User Details</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label>Username:</label>
+            <input type="text" name="username" value="{{ user.username }}" required>
+
+            <label>Email:</label>
+            <input type="email" name="email" value="{{ user.email }}" required>
+
+            <label>Role:</label>
+            <select name="role" required>
+                <option value="student" {% if user.role == "student" %}selected{% endif %}>Student</option>
+                <option value="faculty" {% if user.role == "faculty" %}selected{% endif %}>Faculty</option>
+            </select>
+
+            <button type="submit">Update</button>
+        </form>
+
+        <a href="{% url 'admin_dashboard' %}">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard</title></head>
+<body>
+  <h2>Welcome, {{ user.username }}</h2>
+
+  {% if user.role == "faculty" %}
+    <p>You are logged in as Faculty.</p>
+    <a href="{% url 'create_course' %}">Create Course</a><br>
+    <a href="{% url 'create_assignment' %}">Create Assignment</a>
+  {% elif user.role == "student" %}
+    <p>You are logged in as Student.</p>
+    <a href="{% url 'submit_assignment' %}">Submit Assignment</a>
+  {% else %}
+    <p>You are logged in as an Admin.</p>
+  {% endif %}
+
+  <br><a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>

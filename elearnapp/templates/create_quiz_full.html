@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .question-block { border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; }
+        .question-block h3 { margin-top: 0; }
+        .btn { padding: 8px 12px; cursor: pointer; margin-top: 10px; }
+        .btn-add { background-color: #4CAF50; color: white; }
+        .btn-remove { background-color: #f44336; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Create Quiz</h1>
+
+    <form id="quizForm" method="POST" action="{% url 'create_quiz_full' %}">
+        {% csrf_token %}
+        
+        <label for="title">Quiz Title:</label>
+        <input type="text" name="title" id="title" required><br><br>
+
+        <label for="time_limit">Time Limit (in minutes):</label>
+        <input type="number" name="time_limit" id="time_limit" required><br><br>
+
+        <div id="questionsContainer"></div>
+
+        <input type="hidden" name="quiz_data" id="quiz_data">
+        <button type="button" onclick="addQuestion()" class="btn btn-add">+ Add Question</button><br><br>
+
+        <button type="submit" class="btn">Final Create</button>
+    </form>
+
+    <script>
+        let questionCount = 0;
+
+        function addQuestion() {
+            const container = document.getElementById("questionsContainer");
+
+            const div = document.createElement("div");
+            div.className = "question-block";
+            div.id = `question-${questionCount}`;
+
+            div.innerHTML = `
+                <h3>Question ${questionCount + 1}</h3>
+                <label>Question Text:</label><br>
+                <textarea name="text-${questionCount}" required></textarea><br><br>
+
+                <label>Option 1:</label>
+                <input type="text" name="option1-${questionCount}" required><br>
+                <label>Option 2:</label>
+                <input type="text" name="option2-${questionCount}" required><br>
+                <label>Option 3:</label>
+                <input type="text" name="option3-${questionCount}" required><br>
+                <label>Option 4:</label>
+                <input type="text" name="option4-${questionCount}" required><br>
+
+                <label>Correct Option (1-4):</label>
+                <input type="number" name="correct_option-${questionCount}" min="1" max="4" required><br>
+
+                <button type="button" class="btn btn-remove" onclick="removeQuestion(${questionCount})">Remove</button>
+            `;
+
+            container.appendChild(div);
+            questionCount++;
+        }
+
+        function removeQuestion(index) {
+            const block = document.getElementById(`question-${index}`);
+            if (block) block.remove();
+        }
+
+        document.getElementById("quizForm").addEventListener("submit", function (e) {
+            const questions = [];
+
+            for (let i = 0; i < questionCount; i++) {
+                const block = document.getElementById(`question-${i}`);
+                if (!block) continue;
+
+                const text = block.querySelector(`textarea[name="text-${i}"]`).value;
+                const option1 = block.querySelector(`input[name="option1-${i}"]`).value;
+                const option2 = block.querySelector(`input[name="option2-${i}"]`).value;
+                const option3 = block.querySelector(`input[name="option3-${i}"]`).value;
+                const option4 = block.querySelector(`input[name="option4-${i}"]`).value;
+                const correct_option = block.querySelector(`input[name="correct_option-${i}"]`).value;
+
+                questions.push({
+                    text,
+                    option1,
+                    option2,
+                    option3,
+                    option4,
+                    correct_option: parseInt(correct_option) - 1  // converting 1-based to 0-based
+                });
+            }
+
+            document.getElementById("quiz_data").value = JSON.stringify(questions);
+        });
+    </script>
+</body>
+</html>

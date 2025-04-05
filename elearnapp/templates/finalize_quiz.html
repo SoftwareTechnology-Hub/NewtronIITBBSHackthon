@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Finalize Quiz: {{ quiz.title }}</h2>
+
+<p>All questions have been added.</p>
+
+<a href="{% url 'faculty_dashboard' %}"><button>Go to Dashboard</button></a>
+{% endblock %}

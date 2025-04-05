@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Course</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f5f7fa;
+        }
+
+        .sidebar {
+            width: 20%;
+            background-color: #1e40af;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: white;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #2563eb;
+        }
+
+        .content {
+            margin-left: 20%;
+            padding: 30px;
+            width: 80%;
+            overflow-y: auto;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2563eb;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+        }
+
+        h2, h3, h4 {
+            color: #1e3a8a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            margin: 15px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        a {
+            color: #2563eb;
+        }
+
+       
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Faculty Panel</h2>
+        <a href="{% url 'faculty_dashboard' %}">🏠 Dashboard</a>
+        <a href="{% url 'faculty_create_course' %}">➕ Create Course</a>
+        <a href="{% url 'upload_assignment' %}">📄 Upload Assignment</a>
+        <a href="{% url 'create_quiz_full' %}">📝 Create Quiz</a>
+        <a href="{% url 'faculty_quiz_list' %}">📚 My Quizzes</a>
+        <a href="{% url 'faculty_notifications' %}">📢 Notifications</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>Start Course: {{ course.title }}</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label>Lecture Title:</label>
+            <input type="text" name="title" required>
+
+            <label>Lecture Content:</label>
+            <textarea name="content"></textarea>
+
+            <label>Upload PDF:</label>
+            <input type="file" name="pdf_file" accept="application/pdf">
+
+            <label>Upload Video:</label>
+            <input type="file" name="video_file" accept="video/*">
+
+            <label>Select Upload Date:</label>
+            <input type="date" name="upload_date" value="{% now 'Y-m-d' %}">
+
+            <button type="submit">Add Lecture</button>
+        </form>
+
+        <h3>Lecture Content</h3>
+
+        {% for upload_date, lectures in lectures_by_date.items %}
+            <h4>{{ upload_date }}</h4>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>PDF</th>
+                    <th>Video</th>
+                    <th>Actions</th>
+                </tr>
+                {% for lecture in lectures %}
+                <tr>
+                    <td>{{ lecture.title }}</td>
+                    <td>{{ lecture.content }}</td>
+                    <td>
+                        {% if lecture.pdf_file %}
+                            <a href="{{ lecture.pdf_file.url }}" target="_blank">View PDF</a>
+                        {% else %}
+                            No PDF Uploaded
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if lecture.video_file %}
+                            <a href="{{ lecture.video_file.url }}" target="_blank">View Video</a>
+                        {% else %}
+                            No Video Uploaded
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_lecture' lecture.id %}">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

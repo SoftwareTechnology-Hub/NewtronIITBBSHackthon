@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grade Submission</title>
+</head>
+<body>
+
+    <h2>Grade Submission</h2>
+    
+    <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+    <p><strong>Student:</strong> {{ submission.student.username }}</p>
+    <p><strong>Submitted On:</strong> {{ submission.submitted_on }}</p>
+    
+    <a href="{{ submission.file.url }}" download>📥 Download Submission</a>
+    
+    <h3>Enter Grade and Feedback</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Grade:</label>
+        <input type="text" name="grade" required><br>
+
+        <label>Feedback:</label><br>
+        <textarea name="feedback" rows="4" cols="40" required></textarea><br>
+
+        <button type="submit">Submit Grade</button>
+    </form>
+
+</body>
+</html>

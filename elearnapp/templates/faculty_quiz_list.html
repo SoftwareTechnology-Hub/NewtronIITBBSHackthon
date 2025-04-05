@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Quizzes</title>
+    <style>
+        .quiz-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .question {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Created Quizzes</h1>
+
+    {% if quizzes %}
+        {% for quiz in quizzes %}
+            <div class="quiz-box">
+                <h2>{{ quiz.title }}</h2>
+                <p><strong>Time Limit:</strong> {{ quiz.time_limit }} minutes</p>
+                <p><strong>Total Questions:</strong> {{ quiz.question_count }}</p>
+                <h3>Questions:</h3>
+                <ol>
+                    {% for q in quiz.questions %}
+                        <li>
+                            <strong>{{ q.text }}</strong>
+                            <ul>
+                                {% for choice in q.choices %}
+                                    <li>
+                                        {{ choice }}
+                                        {% if forloop.counter0 == q.correct_index %}
+                                            <strong>(Correct)</strong>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No quizzes found.</p>
+    {% endif %}
+</body>
+</html>

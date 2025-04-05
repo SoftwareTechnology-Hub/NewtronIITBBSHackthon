@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Course</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f5f7fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 20%;
+            background-color: #1e40af;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: white;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #2563eb;
+        }
+
+        /* Content */
+        .content {
+            margin-left: 20%;
+            padding: 30px;
+            width: 80%;
+            overflow-y: auto;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2563eb;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+        }
+
+        h2 {
+            color: #1e3a8a;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Faculty Panel</h2>
+        <a href="{% url 'faculty_dashboard' %}">🏠 Dashboard</a>
+        <a href="{% url 'faculty_create_course' %}">➕ Create Course</a>
+        <a href="{% url 'upload_assignment' %}">📄 Upload Assignment</a>
+        <a href="{% url 'create_quiz_full' %}">📝 Create Quiz</a>
+        <a href="{% url 'faculty_quiz_list' %}">📚 My Quizzes</a>
+        <a href="{% url 'faculty_notifications' %}">📢 Notifications</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h2>Edit Course</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            <label>Title:</label>
+            <input type="text" name="title" value="{{ course.title }}" required>
+
+            <label>Description:</label>
+            <textarea name="description" required>{{ course.description }}</textarea>
+
+            <label>Start Date:</label>
+            <input type="date" name="start_date" value="{{ course.start_date }}" required>
+
+            <button type="submit">Update Course</button>
+        </form>
+
+        <a class="back-link" href="{% url 'faculty_dashboard' %}">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

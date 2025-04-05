@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f5f7fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 20%;
+            background-color: #1e40af;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: white;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #2563eb;
+        }
+
+        /* Content */
+        .content {
+            margin-left: 20%;
+            padding: 30px;
+            width: 80%;
+            overflow-y: auto;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            margin: 15px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2563eb;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+        }
+
+        h3 {
+            color: #1e3a8a;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .section {
+  margin-top: 40px;
+  padding: 20px;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  margin-bottom: 10px;
+}
+
+.icon-circle {
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.profile-info h3 {
+  margin: 10px 0 5px;
+  font-size: 24px;
+  color: #333;
+}
+
+.profile-info p {
+  font-size: 14px;
+  color: #777;
+}
+
+.profile-details {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.profile-details p {
+  font-size: 15px;
+  margin: 8px 0;
+  color: #444;
+}
+
+.profile-details strong {
+  color: #222;
+}
+
+.profile-actions {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-actions .button {
+  background-color: #4a90e2;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.profile-actions .button:hover {
+  background-color: #357ab8;
+}
+
+.profile-actions .logout {
+  background-color: #e94e4e;
+}
+
+.profile-actions .logout:hover {
+  background-color: #c0392b;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Faculty</h2>
+        <a href="javascript:void(0)" onclick="showSection('welcome')" class="active">Dashboard</a>
+        <a href="{% url 'faculty_create_course' %}">➕ Create New Course</a>
+        <a href="javascript:void(0)" onclick="showSection('view_courses')">📚 Your Courses</a>
+        <a href="javascript:void(0)" onclick="showSection('students')">👨‍🎓 Enrolled Students</a>
+        <a href="{% url 'upload_assignment' %}">📄 Upload Assignment</a>
+        <a href="javascript:void(0)" onclick="showSection('submissions')">📝 View Submissions</a>
+        <a href="javascript:void(0)" onclick="showSection('quiz')">❓ Quiz Section</a>
+        <a href="{% url 'faculty_notifications' %}">📢 Notifications</a>
+    </div>
+    
+
+<div class="content">
+
+    <!-- Welcome Section -->
+    <div id="welcome" class="section active" style="display: flex; justify-content: center;">
+        <div class="profile-card">
+          <div class="profile-header centered">
+            <div class="profile-avatar">
+              <div class="icon-circle">
+                <div class="profile-avatark">🎓</div>
+              </div>
+            </div>
+      
+            <div class="profile-info">
+              <h3>Welcome, {{ user.get_full_name|default:user.username }} (Faculty)</h3>
+              <p>{{ user.email }}</p>
+            </div>
+          </div>
+      
+          <div class="profile-details">
+            <p>This is your faculty dashboard where you can manage your <strong>courses</strong>, <strong>assignments</strong>, and <strong>students</strong>.</p>
+            <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+            <p><strong>Last Login:</strong> {{ user.last_login|date:"F j, Y, g:i a" }}</p>
+          </div>
+      
+          <div class="profile-actions">
+            <a href="#" class="button">Go to Courses</a>
+            <a href="#" class="button logout">Logout</a>
+          </div>
+        </div>
+      </div>
+      
+
+
+    <!-- Create Course -->
+    <div id="create_course" class="section">
+        <h3>Create New Course</h3>
+        <form method="post">
+            {% csrf_token %}
+            <label>Title:</label>
+            <input type="text" name="title" required>
+            <label>Description:</label>
+            <textarea name="description" required></textarea>
+            <label>Start Date:</label>
+            <input type="date" name="start_date" required>
+            <button type="submit">Create Course</button>
+        </form>
+    </div>
+
+    <!-- View Courses -->
+    <div id="view_courses" class="section">
+        <h3>Your Courses</h3>
+        <table>
+            <tr>
+                <th>ID</th><th>image</th><th>Title</th><th>Description</th><th>Start Date</th><th>Edit</th><th>Start</th>
+            </tr>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.id }}</td>
+                <td>
+                    {% if course.image %}
+                        <img src="{{ course.image.url }}" alt="Course Image" style="height: 60px; width: 60px; object-fit: cover;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>{{ course.title }}</td>
+                <td>{{ course.description }}</td>
+                <td>{{ course.start_date }}</td>
+                <td><a href="{% url 'faculty_edit_course' course.id %}">Edit</a></td>
+                <td><a href="{% url 'start_course' course.id %}">Start</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Enrolled Students -->
+    <div id="students" class="section">
+        <h3>Courses You Teach</h3>
+        {% for course, students in course_students.items %}
+            <h4>{{ course.title }}</h4>
+            <table>
+                <tr><th>Student Name</th><th>Email</th><th>Details</th></tr>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.username }}</td>
+                    <td>{{ student.email }}</td>
+                    <td><a href="{% url 'student_details' student.id %}">View Details</a></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3">No students enrolled</td></tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    </div>
+
+    <!-- Upload Assignment -->
+    <div id="assignment" class="section">
+        <h3>Upload New Assignment</h3>
+        <a href="{% url 'upload_assignment' %}">Go to Assignment Upload Page</a>
+    </div>
+
+    <!-- Submissions -->
+    <div id="submissions" class="section">
+        <h3>Student Submissions</h3>
+        {% for course, submissions in course_submissions.items %}
+            <h4>Course: {{ course.title }}</h4>
+            <table>
+                <tr>
+                    <th>Student</th><th>Assignment</th><th>File</th><th>Submitted On</th><th>Grade</th><th>Action</th>
+                </tr>
+                {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.student.username }}</td>
+                    <td>{{ submission.assignment.title }}</td>
+                    <td><a href="{{ submission.file.url }}" download>Download</a></td>
+                    <td>{{ submission.submitted_on }}</td>
+                    <td>{{ submission.grade|default:"Not Graded" }}</td>
+                    <td><a href="{% url 'grade_submission' submission.id %}">Grade</a></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">No submissions yet.</td></tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quiz" class="section">
+        <h3>Quiz Management</h3>
+        <a href="{% url 'create_quiz_full' %}">➕ Create New Quiz</a><br><br>
+        <a href="{% url 'faculty_quiz_list' %}">📋 View My Quizzes</a>
+    </div>
+</div>
+
+<script>
+    function showSection(id) {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(sec => sec.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+
+        const links = document.querySelectorAll('.sidebar a');
+        links.forEach(link => link.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+</script>
+<script>
+    function showSection(id) {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(sec => {
+            sec.classList.remove('active');
+            sec.style.display = 'none'; // ✅ hide all sections
+        });
+
+        const activeSection = document.getElementById(id);
+        activeSection.classList.add('active');
+
+        // ✅ Set display type based on section (use 'flex' for welcome, else 'block')
+        if (id === 'welcome') {
+            activeSection.style.display = 'flex';
+        } else {
+            activeSection.style.display = 'block';
+        }
+
+        const links = document.querySelectorAll('.sidebar a');
+        links.forEach(link => link.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+</script>
+
+</body>
+</html>

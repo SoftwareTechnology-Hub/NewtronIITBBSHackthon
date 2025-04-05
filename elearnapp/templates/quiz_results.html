@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Results</title>
+</head>
+<body>
+    <h2>Results for Quiz: {{ quiz.title }}</h2>
+    <table border="1">
+        <tr>
+            <th>Student</th>
+            <th>Score</th>
+        </tr>
+        {% for student, score in student_scores.items %}
+        <tr>
+            <td>{{ student.username }}</td>
+            <td>{{ score }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

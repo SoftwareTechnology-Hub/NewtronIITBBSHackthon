@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Create Assignment</title></head>
+<body>
+  <h2>Create Assignment</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <select name="course" required>
+      {% for course in courses %}
+        <option value="{{ course.id }}">{{ course.title }}</option>
+      {% endfor %}
+    </select><br>
+    <input type="text" name="title" placeholder="Assignment Title" required><br>
+    <textarea name="description" placeholder="Description" required></textarea><br>
+    <input type="datetime-local" name="deadline" required><br>
+    <button type="submit">Create</button>
+  </form>
+</body>
+</html>

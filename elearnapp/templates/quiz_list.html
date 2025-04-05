@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Quizzes</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        h3 {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Available Quizzes</h2>
+
+    {% if quizzes %}
+        {% for quiz in quizzes %}
+            <h3>{{ quiz.title }} ({{ quiz.time_limit }} minutes)</h3>
+            
+            {% if quiz.question_set.all %}
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>Question</th>
+                        <th>Options</th>
+                        <th>Correct Answer</th>
+                    </tr>
+                    {% for question in quiz.question_set.all %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ question.text }}</td>
+                            <td>
+                                <ul>
+                                    <li>1. {{ question.option1 }}</li>
+                                    <li>2. {{ question.option2 }}</li>
+                                    <li>3. {{ question.option3 }}</li>
+                                    <li>4. {{ question.option4 }}</li>
+                                </ul>
+                            </td>
+                            <td>
+                                {% if question.correct_option == 0 %}
+                                    {{ question.option1 }}
+                                {% elif question.correct_option == 1 %}
+                                    {{ question.option2 }}
+                                {% elif question.correct_option == 2 %}
+                                    {{ question.option3 }}
+                                {% elif question.correct_option == 3 %}
+                                    {{ question.option4 }}
+                                {% else %}
+                                    Unknown
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No questions added to this quiz.</p>
+            {% endif %}
+
+            <p><a href="{% url 'take_quiz' quiz.id %}">Take Quiz</a></p>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No quizzes available at the moment.</p>
+    {% endif %}
+</body>
+</html>

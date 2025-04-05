@@ -1,0 +1,52 @@
+<style>
+    .course-details {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      font-family: Arial, sans-serif;
+    }
+  
+    .course-details h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+  
+    .course-details p {
+      font-size: 16px;
+      margin: 10px 0;
+      color: #333;
+    }
+  
+    .course-details strong {
+      color: #2c3e50;
+    }
+  
+    .course-details a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #ffffff;
+      background-color: #3498db;
+      padding: 10px 15px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+  
+    .course-details a:hover {
+      background-color: #2980b9;
+    }
+  </style>
+  
+  <div class="course-details">
+    <h2>Course Details</h2>
+    <p><strong>Title:</strong> {{ course.title }}</p>
+    <p><strong>Description:</strong> {{ course.description }}</p>
+    <p><strong>Faculty:</strong> {{ course.faculty.username }}</p>
+  
+    <a href="{% url 'available_courses' %}">Back to Courses</a>
+  </div>
+  

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Courses</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .course-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .course-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .course-description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .course-meta {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .enroll-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1d4ed8;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .enroll-button:hover {
+            background-color: #0931a0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Available Courses</h1>
+
+    {% if courses %}
+    <div class="course-grid">
+        {% for course in courses %}
+            <div class="course-card">
+                {% if course.image %}
+                    <img src="{{ course.image.url }}" alt="Course Image" class="course-image">
+                {% else %}
+                    <div class="course-image" style="background-color:#e5e7eb; display:flex; align-items:center; justify-content:center; color:#666;">No Image</div>
+                {% endif %}
+
+                <div class="course-content">
+                    <div>
+                        <div class="course-title">{{ course.title }}</div>
+                        <div class="course-description">{{ course.description|truncatewords:25 }}</div>
+                        <div class="course-meta">
+                            <strong>Faculty:</strong> {{ course.faculty.get_full_name }}<br>
+                            <strong>Start Date:</strong> {{ course.start_date|date:"F j, Y" }}
+                        </div>
+                    </div>
+                    <a href="{% url 'login' %}" class="enroll-button">Enroll</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p style="text-align:center;">No courses available right now.</p>
+    {% endif %}
+</body>
+</html>

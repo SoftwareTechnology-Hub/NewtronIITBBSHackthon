@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Lecture</title>
+</head>
+<body>
+
+<h2>Edit Lecture</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <label>Title:</label>
+    <input type="text" name="title" value="{{ lecture.title }}" required><br><br>
+
+    <label>Content:</label>
+    <textarea name="content" required>{{ lecture.content }}</textarea><br><br>
+
+    <label>Current PDF:</label>
+    {% if lecture.pdf_file %}
+        <a href="{{ lecture.pdf_file.url }}" target="_blank">View PDF</a>
+    {% else %}
+        No PDF Uploaded
+    {% endif %}
+    <input type="file" name="pdf_file"><br><br>
+
+    <label>Current Video:</label>
+    {% if lecture.video_file %}
+        <a href="{{ lecture.video_file.url }}" target="_blank">View Video</a>
+    {% else %}
+        No Video Uploaded
+    {% endif %}
+    <input type="file" name="video_file"><br><br>
+
+    <button type="submit">Update Lecture</button>
+</form>
+
+</body>
+</html>

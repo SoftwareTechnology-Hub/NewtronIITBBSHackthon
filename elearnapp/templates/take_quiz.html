@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ quiz.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        .question {
+            margin-bottom: 30px;
+        }
+        .question p {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .option {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>{{ quiz.title }}</h2>
+    <p><strong>Time Limit:</strong> {{ quiz.time_limit }} minutes</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for question in questions %}
+            {% with lines=question.text.splitlines %}
+                {% if lines|length > 1 %}
+                    <div class="question">
+                        <p>Q{{ forloop.counter }}: {{ lines.0 }}</p>
+                        {% for option in lines|slice:"1:5" %}
+                            <div class="option">
+                                <label>
+                                    <input type="radio" name="question_{{ question.id }}" value="{{ option|slice:'3:' }}">
+                                    {{ option }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>Q{{ forloop.counter }}: {{ question.text }} (No options found)</p>
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+
+        <button type="submit">Submit Quiz</button>
+    </form>
+</body>
+</html>

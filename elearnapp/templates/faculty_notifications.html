@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Notifications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f5f7fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 20%;
+            background-color: #1e40af;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: white;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #2563eb;
+        }
+
+        /* Content */
+        .content {
+            margin-left: 20%;
+            padding: 30px;
+            width: 80%;
+            overflow-y: auto;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2563eb;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+        }
+
+        h2, h3 {
+            color: #1e3a8a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            margin-top: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #1e40af;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Faculty Panel</h2>
+        <a href="{% url 'faculty_dashboard' %}">🏠 Dashboard</a>
+        <a href="{% url 'faculty_create_course' %}">➕ Create Course</a>
+        <a href="{% url 'upload_assignment' %}">📄 Upload Assignment</a>
+        <a href="{% url 'create_quiz_full' %}">📝 Create Quiz</a>
+        <a href="{% url 'faculty_quiz_list' %}">📚 My Quizzes</a>
+        <a class="active" href="{% url 'faculty_notifications' %}">📢 Notifications</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>Faculty Notifications</h2>
+
+        <!-- Notification Form -->
+        <form method="POST">
+            {% csrf_token %}
+            <label>Title:</label>
+            <input type="text" name="title" required>
+            
+            <label>Message:</label>
+            <textarea name="message" required></textarea>
+
+            <button type="submit">Send Notification</button>
+        </form>
+
+        <!-- Sent Notifications -->
+        <h3>Sent Notifications</h3>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Date</th>
+            </tr>
+            {% for notification in notifications %}
+            <tr>
+                <td>{{ notification.title }}</td>
+                <td>{{ notification.message }}</td>
+                <td>{{ notification.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>

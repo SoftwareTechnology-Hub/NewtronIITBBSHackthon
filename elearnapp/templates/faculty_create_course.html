@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create New Course</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #eef1f5;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 20%;
+      background-color: #1e40af;
+      padding: 20px;
+      min-height: 100vh;
+      color: #ffffff;
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+        background-color: #2563eb;
+    }
+
+    /* Main Content */
+    .main-content {
+      width: 80%;
+      padding: 40px;
+      background-color: #eef1f5;
+    }
+
+    .form-container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      color: #1e3a5f;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333333;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 120px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: #ffffff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>Faculty Panel</h3>
+    <a href="{% url 'faculty_dashboard' %}">🏠 Dashboard</a>
+    <a href="{% url 'faculty_create_course' %}">➕ Create Course</a>
+    <a href="{% url 'upload_assignment' %}">📄 Upload Assignment</a>
+    <a href="{% url 'create_quiz_full' %}">📝 Create Quiz</a>
+    <a href="{% url 'faculty_quiz_list' %}">📚 My Quizzes</a>
+    <a href="{% url 'faculty_notifications' %}">📢 Notifications</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="form-container">
+      <h2>Create New Course</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Title:</label>
+        <input type="text" name="title" required>
+
+        <label>Description:</label>
+        <textarea name="description" required></textarea>
+
+        <label>Start Date:</label>
+        <input type="date" name="start_date" required>
+
+        <label>Course Image:</label>
+        <input type="file" name="image">
+      
+        <button type="submit">Create Course</button>
+      </form>
+
+      <a class="back-link" href="{% url 'faculty_dashboard' %}">← Back to Dashboard</a>
+    </div>
+  </div>
+
+</body>
+</html>
