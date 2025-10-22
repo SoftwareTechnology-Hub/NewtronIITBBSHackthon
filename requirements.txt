@@ -1,0 +1,35 @@
+# Django core
+Django>=3.2,<5
+
+# Database adapter (PostgreSQL recommended for production)
+psycopg2-binary>=2.9
+
+# For image handling (course images, profile pics, etc.)
+Pillow>=10.0
+
+# For handling uploaded files (optional but recommended)
+django-storages>=1.15
+
+# Gunicorn for deployment on Linux servers
+gunicorn>=21.0
+
+# Optional: For JSON parsing, though standard library is enough
+# json (standard library, no need to install)
+
+# Optional: For better form rendering (if using crispy forms)
+django-crispy-forms>=1.14
+
+# Optional: If using environment variables for secret keys, DB credentials
+python-dotenv>=1.1
+
+# Optional: For sorting/grouping dates (used in lectures)
+python-dateutil>=2.9
+
+# Optional: For handling video uploads efficiently
+ffmpeg-python>=0.2.0
+
+# Optional: For quizzes, requests if API needed
+requests>=2.31
+
+# Optional: For advanced validation or utilities
+validators>=0.20
