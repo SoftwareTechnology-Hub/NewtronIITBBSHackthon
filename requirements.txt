@@ -8,7 +8,7 @@ psycopg2-binary>=2.9
 Pillow>=10.0
 
 # For handling uploaded files (optional but recommended)
-django-storages>=1.15
+django-storages
 
 # Gunicorn for deployment on Linux servers
 gunicorn>=21.0
