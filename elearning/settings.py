@@ -134,4 +134,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATIC_URL = '/static/'
 import os
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'elearnapp/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'elearnapp','static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
